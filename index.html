@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Belajar Anak - Matematik Tahun 1</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#e0f2fe,#fef3c7);min-height:100vh;color:#172033}
+.app{max-width:520px;margin:auto;padding:20px}
+.card{background:white;border-radius:24px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.12);margin-top:20px}
+h1{text-align:center;margin:5px 0 8px;font-size:30px}
+.subtitle{text-align:center;color:#64748b;margin-bottom:20px}
+.name{width:100%;padding:14px;border:2px solid #dbeafe;border-radius:14px;font-size:17px}
+button{width:100%;border:0;border-radius:15px;padding:15px;margin-top:12px;font-size:17px;font-weight:700;cursor:pointer}
+.start{background:#2563eb;color:white}
+.option{background:#f1f5f9;color:#172033}
+.option:hover{background:#dbeafe}
+.correct{background:#bbf7d0!important}
+.wrong{background:#fecaca!important}
+.top{display:flex;justify-content:space-between;font-weight:bold;color:#475569}
+.progress{height:10px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin:15px 0 25px}
+.bar{height:100%;background:#2563eb;width:0;transition:.3s}
+.question{text-align:center;font-size:48px;font-weight:800;margin:25px 0}
+.feedback{text-align:center;min-height:28px;font-weight:bold;margin-top:12px}
+.hidden{display:none}
+.result{text-align:center}
+.score{font-size:54px;font-weight:900;color:#2563eb}
+.small{font-size:14px;color:#64748b;text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div id="home" class="card">
+  <h1>📚 Smart Belajar Anak</h1>
+  <div class="subtitle">Matematik Tahun 1 • V1</div>
+  <input id="name" class="name" placeholder="Nama murid">
+  <button class="start" onclick="startQuiz()">🚀 Mula Kuiz</button>
+  <div class="small">10 soalan • Tambah & Tolak • Markah automatik</div>
+</div>
+
+<div id="quiz" class="card hidden">
+  <div class="top"><span id="student"></span><span id="counter"></span></div>
+  <div class="progress"><div id="bar" class="bar"></div></div>
+  <div id="question" class="question"></div>
+  <div id="answers"></div>
+  <div id="feedback" class="feedback"></div>
+</div>
+
+<div id="result" class="card hidden result">
+  <h1>🎉 Tahniah!</h1>
+  <p id="resultName"></p>
+  <div id="score" class="score"></div>
+  <p id="message"></p>
+  <button class="start" onclick="startQuiz()">🔄 Main Semula</button>
+  <button class="option" onclick="goHome()">🏠 Menu Utama</button>
+</div>
+
+</div>
+
+<script>
+let questions=[], current=0, score=0, locked=false;
+
+function rand(n){return Math.floor(Math.random()*n)+1}
+
+function makeQuestions(){
+  const q=[];
+  for(let i=0;i<10;i++){
+    let a,b,ans,op;
+    if(Math.random()<0.5){
+      a=rand(10); b=rand(10);
+      ans=a+b; op="+";
+    }else{
+      a=rand(10); b=rand(a);
+      ans=a-b; op="-";
+    }
+    let opts=new Set([ans]);
+    while(opts.size<4){
+      let x=ans + Math.floor(Math.random()*7)-3;
+      if(x>=0 && x<=20) opts.add(x);
+    }
+    q.push({text:`${a} ${op} ${b} = ?`,ans,opts:[...opts].sort(()=>Math.random()-.5)});
+  }
+  return q;
+}
+
+function startQuiz(){
+  let n=document.getElementById("name").value.trim() || "Murid";
+  document.getElementById("student").textContent="👦 "+n;
+  questions=makeQuestions(); current=0; score=0;
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  showQuestion();
+}
+
+function showQuestion(){
+  locked=false;
+  let q=questions[current];
+  document.getElementById("counter").textContent=`${current+1}/10`;
+  document.getElementById("bar").style.width=((current)/10*100)+"%";
+  document.getElementById("question").textContent=q.text;
+  document.getElementById("feedback").textContent="";
+  let box=document.getElementById("answers"); box.innerHTML="";
+  q.opts.forEach(x=>{
+    let b=document.createElement("button");
+    b.className="option"; b.textContent=x;
+    b.onclick=()=>answer(x,b);
+    box.appendChild(b);
+  });
+}
+
+function answer(x,btn){
+  if(locked)return; locked=true;
+  let q=questions[current];
+  if(x===q.ans){
+    score++; btn.classList.add("correct");
+    document.getElementById("feedback").textContent="✅ Betul! Hebat!";
+  }else{
+    btn.classList.add("wrong");
+    document.getElementById("feedback").textContent=`❌ Belum tepat. Jawapan: ${q.ans}`;
+    [...document.querySelectorAll(".option")].forEach(b=>{
+      if(Number(b.textContent)===q.ans)b.classList.add("correct");
+    });
+  }
+  setTimeout(()=>{
+    current++;
+    if(current<10) showQuestion(); else finish();
+  },850);
+}
+
+function finish(){
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+  let n=document.getElementById("name").value.trim() || "Murid";
+  document.getElementById("resultName").textContent=`Syabas, ${n}!`;
+  document.getElementById("score").textContent=`${score} / 10`;
+  document.getElementById("message").textContent=
+    score===10?"🏆 Cemerlang! Semua betul!":
+    score>=8?"🌟 Sangat bagus! Teruskan berlatih!":
+    score>=5?"👍 Bagus! Cuba lagi untuk tingkatkan markah!":
+    "💪 Jangan putus asa. Cuba lagi!";
+}
+
+function goHome(){
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+}
+</script>
+</body>
+</html>
