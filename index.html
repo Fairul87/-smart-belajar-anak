@@ -1,198 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ms">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Belajar Anak Tahun 1</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Belajar Tahun 1 - Next Level</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#e0f2fe,#fef3c7);min-height:100vh;color:#172554}
-.container{max-width:650px;margin:auto;padding:20px}
-.card{background:white;border-radius:24px;padding:24px;box-shadow:0 10px 30px #0002;margin-top:18px}
-h1{text-align:center;margin:8px 0;color:#1d4ed8}
-h2{text-align:center}
-.subtitle{text-align:center;color:#64748b;margin-bottom:20px}
-input{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;margin:10px 0 18px}
-.menu{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-button{border:0;border-radius:16px;padding:16px;font-size:17px;font-weight:bold;cursor:pointer;background:#2563eb;color:white}
-button:active{transform:scale(.98)}
-.subject{min-height:125px}
-.math{background:#2563eb}.science{background:#059669}.bm{background:#db2777}.english{background:#7c3aed}
-.hidden{display:none}
-.progress{height:12px;background:#e2e8f0;border-radius:10px;overflow:hidden;margin:15px 0}
-.bar{height:100%;background:#2563eb;width:0%;transition:.3s}
-.option{display:block;width:100%;margin:10px 0;background:#f1f5f9;color:#172554;text-align:left;border:2px solid #e2e8f0}
-.option:hover{background:#dbeafe}
-.feedback{text-align:center;font-size:18px;font-weight:bold;min-height:28px;margin:12px 0}
-.score{text-align:center;font-size:24px;font-weight:bold}
-.back{background:#64748b;margin-top:12px;width:100%}
-.next{width:100%;margin-top:8px}
-.small{text-align:center;color:#64748b;font-size:14px}
-@media(max-width:480px){.menu{grid-template-columns:1fr}.container{padding:12px}.card{padding:18px}}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#dbeafe,#fef3c7);color:#172554}.wrap{max-width:700px;margin:auto;padding:15px}.card{background:#fff;border-radius:24px;padding:22px;box-shadow:0 10px 30px #0002;margin-top:15px}h1,h2{text-align:center}h1{color:#1d4ed8}.sub,.small{text-align:center;color:#64748b}input{width:100%;padding:14px;border:2px solid #cbd5e1;border-radius:14px;font-size:16px;margin:10px 0 16px}.menu{display:grid;grid-template-columns:1fr 1fr;gap:13px}button{border:0;border-radius:15px;padding:14px;font-size:16px;font-weight:700;cursor:pointer}.subject{color:white;min-height:110px}.math{background:#2563eb}.science{background:#059669}.bm{background:#db2777}.eng{background:#7c3aed}.hidden{display:none}.stats{display:flex;gap:8px;margin:10px 0}.stat{flex:1;text-align:center;background:#f1f5f9;padding:9px;border-radius:12px;font-weight:700}.progress{height:12px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:12px 0}.bar{height:100%;background:#2563eb;width:0;transition:.3s}.option{display:block;width:100%;margin:9px 0;text-align:left;background:#f8fafc;color:#172554;border:2px solid #e2e8f0}.feedback{text-align:center;font-weight:700;min-height:28px;margin:10px}.next,.again{width:100%;background:#2563eb;color:white}.back{width:100%;background:#64748b;color:white;margin-top:10px}.score{text-align:center;font-size:24px;font-weight:700}.achievement{background:#fef3c7;border-radius:16px;padding:14px;text-align:center;font-weight:700}@media(max-width:500px){.menu{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="container">
-<div id="home" class="card">
-<h1>🎓 Smart Belajar Anak</h1>
-<p class="subtitle">Tahun 1 • Belajar sambil bermain</p>
-<input id="studentName" placeholder="Masukkan nama murid">
-div class="menu">
-<button class="subject math" onclick="startQuiz('math')">🧮<br>Matematik</button>
-<button class="subject science" onclick="startQuiz('science')">🔬<br>Sains</button>
-<button class="subject bm" onclick="startQuiz('bm')">📖<br>Bahasa Melayu</button>
-<button class="subject english" onclick="startQuiz('english')">🇬🇧<br>English</button>
+<div class="wrap">
+<section id="home" class="card">
+<h1>🎓 Smart Belajar Tahun 1</h1>
+<p class="sub">🚀 NEXT LEVEL • XP • STREAK • PENCAPAIAN</p>
+<input id="name" placeholder="Masukkan nama murid">
+<div class="menu">
+<button class="subject math" onclick="start('math')">🧮<br>Matematik</button>
+<button class="subject science" onclick="start('science')">🔬<br>Sains</button>
+<button class="subject bm" onclick="start('bm')">📖<br>Bahasa Melayu</button>
+<button class="subject eng" onclick="start('eng')">🇬🇧<br>English</button>
 </div>
-<p class="small">Pilih satu subjek untuk mula kuiz.</p>
-</div>
-
-<div id="quiz" class="card hidden">
-<h2 id="quizTitle"></h2>
-<p id="welcome" class="subtitle"></p>
+<p class="small">15 soalan setiap subjek • Kumpul XP dan bintang ⭐</p>
+</section>
+<section id="quiz" class="card hidden">
+<h2 id="title"></h2><p id="welcome" class="sub"></p>
+<div class="stats"><div class="stat">⭐ XP<br><span id="xp">0</span></div><div class="stat">🔥 Streak<br><span id="streak">0</span></div><div class="stat">❤️ Nyawa<br><span id="lives">3</span></div></div>
 <div class="progress"><div id="bar" class="bar"></div></div>
-<p id="counter" class="small"></p>
-<h2 id="question"></h2>
-<div id="options"></div>
-<div id="feedback" class="feedback"></div>
-<button id="next" class="next hidden" onclick="nextQuestion()">Soalan Seterusnya ➡️</button>
+<p id="count" class="small"></p><h2 id="question"></h2><div id="options"></div><div id="feedback" class="feedback"></div>
+<button id="next" class="next hidden" onclick="nextQ()">Soalan Seterusnya ➡️</button>
 <button class="back" onclick="goHome()">🏠 Menu Utama</button>
+</section>
+<section id="result" class="card hidden">
+<h1>🏆 TAMAT!</h1><p id="resultText" class="score"></p><p id="resultXP" class="score"></p>
+<div id="achievement" class="achievement"></div><p id="stars" class="score"></p>
+<button class="again" onclick="again()">🔄 Cuba Lagi</button><button class="back" onclick="goHome()">🏠 Menu Utama</button>
+</section>
 </div>
-
-<div id="result" class="card hidden">
-<h1>🎉 Tahniah!</h1>
-<p id="resultText" class="score"></p>
-<p id="stars" class="score"></p>
-<button class="next" onclick="restart()">🔄 Cuba Lagi</button>
-<button class="back" onclick="goHome()">🏠 Menu Utama</button>
-</div>
-</div>
-
 <script>
-const quizzes={
-math:{
-title:"🧮 Matematik Tahun 1",
-q:[
-["2 + 3 = ?",["4","5","6","7"],"5"],
-["7 - 2 = ?",["3","4","5","6"],"5"],
-["4 + 4 = ?",["6","7","8","9"],"8"],
-["9 - 3 = ?",["5","6","7","8"],"6"],
-["5 + 2 = ?",["6","7","8","9"],"7"],
-["10 - 4 = ?",["4","5","6","7"],"6"],
-["3 + 6 = ?",["7","8","9","10"],"9"],
-["8 - 5 = ?",["2","3","4","5"],"3"],
-["1 + 8 = ?",["7","8","9","10"],"9"],
-["10 - 2 = ?",["6","7","8","9"],"8"]
-]},
-science:{
-title:"🔬 Sains Tahun 1",
-q:[
-["Organ deria untuk melihat ialah...",["Mata","Telinga","Hidung","Kulit"],"Mata"],
-["Manusia memerlukan ______ untuk bernafas.",["Air","Udara","Tanah","Cahaya"],"Udara"],
-["Haiwan yang hidup di dalam air ialah...",["Kucing","Ayam","Ikan","Arnab"],"Ikan"],
-["Bahagian tumbuhan yang menyerap air ialah...",["Bunga","Daun","Akar","Buah"],"Akar"],
-["Organ deria untuk mendengar ialah...",["Mata","Telinga","Lidah","Kulit"],"Telinga"],
-["Yang manakah benda hidup?",["Batu","Kerusi","Pokok","Pensel"],"Pokok"],
-["Kita menggunakan lidah untuk merasa...",["Bunyi","Makanan","Cahaya","Bau"],"Makanan"],
-["Tumbuhan memerlukan ______ untuk hidup.",["Air","Televisyen","Bola","Buku"],"Air"],
-["Haiwan yang berbulu dan menyusukan anak ialah...",["Mamalia","Ikan","Serangga","Reptilia"],"Mamalia"],
-["Kulit membantu kita mengesan...",["Sentuhan","Cahaya","Bunyi","Rasa"],"Sentuhan"]
-]},
-bm:{
-title:"📖 Bahasa Melayu Tahun 1",
-q:[
-["Pilih perkataan yang betul: Saya suka makan ____.",["nasi","lari","buku","tidur"],"nasi"],
-["Lawan bagi perkataan 'besar' ialah...",["tinggi","kecil","panjang","cepat"],"kecil"],
-["Ali sedang ____ bola.",["makan","tidur","bermain","minum"],"bermain"],
-["Pilih kata nama: ____",["cantik","lari","buku","cepat"],"buku"],
-["Ibu memasak di ____.",["sekolah","dapur","taman","padang"],"dapur"],
-["Lawan bagi 'panas' ialah...",["sejuk","besar","tinggi","laju"],"sejuk"],
-["Ayah pergi ke ____ untuk membeli barang.",["kedai","bantal","pokok","kasut"],"kedai"],
-["Pilih perkataan yang menunjukkan warna.",["merah","makan","lari","tidur"],"merah"],
-["'Kucing itu tidur.' Apakah haiwan dalam ayat?",["Ayam","Kucing","Ikan","Arnab"],"Kucing"],
-["Pilih ejaan yang betul.",["sekolah","sekola","sekolh","sekolahh"],"sekolah"]
-]},
-english:{
-title:"🇬🇧 English Year 1",
-q:[
-["What color is the sun? (common answer)",["Blue","Yellow","Black","Purple"],"Yellow"],
-["Choose the animal: ____ is a cat.",["It","They","We","You"],"It"],
-["What is 1 + 1?",["One","Two","Three","Four"],"Two"],
-["Complete: I ____ a boy.",["am","is","are","be"],"am"],
-["Which one is a fruit?",["Apple","Chair","Book","Pencil"],"Apple"],
-["Opposite of 'big' is...",["Small","Tall","Fast","Hot"],"Small"],
-["Choose the correct word: This is my ____.",["book","run","eat","blue"],"book"],
-["How many fingers are on one hand?",["Three","Four","Five","Six"],"Five"],
-["Complete: She ____ happy.",["am","is","are","be"],"is"],
-["Which one is a color?",["Red","Cat","Run","Book"],"Red"]
-]}
-};
-
-let current=null,index=0,score=0,answered=false;
-
-function startQuiz(subject){
- const name=document.getElementById('studentName').value.trim();
- if(!name){alert("Sila masukkan nama murid dahulu 😊");return;}
- current=quizzes[subject]; index=0; score=0;
- document.getElementById('home').classList.add('hidden');
- document.getElementById('result').classList.add('hidden');
- document.getElementById('quiz').classList.remove('hidden');
- document.getElementById('quizTitle').textContent=current.title;
- document.getElementById('welcome').textContent="Selamat belajar, "+name+"! 💪";
- showQuestion();
-}
-function showQuestion(){
- answered=false;
- const item=current.q[index];
- document.getElementById('counter').textContent=`Soalan ${index+1} / ${current.q.length}`;
- document.getElementById('bar').style.width=((index)/current.q.length*100)+"%";
- document.getElementById('question').textContent=item[0];
- const box=document.getElementById('options'); box.innerHTML="";
- item[1].forEach(opt=>{
-  const b=document.createElement('button');
-  b.className="option"; b.textContent=opt;
-  b.onclick=()=>answer(b,opt);
-  box.appendChild(b);
- });
- document.getElementById('feedback').textContent="";
- document.getElementById('next').classList.add('hidden');
-}
-function answer(btn,opt){
- if(answered)return;
- answered=true;
- const correct=current.q[index][2];
- document.querySelectorAll('.option').forEach(b=>b.disabled=true);
- if(opt===correct){
-  score++; btn.style.background="#bbf7d0"; btn.style.borderColor="#16a34a";
-  document.getElementById('feedback').textContent="✅ Betul! Hebat!";
- }else{
-  btn.style.background="#fecaca"; btn.style.borderColor="#dc2626";
-  document.getElementById('feedback').textContent="❌ Belum tepat. Jawapan: "+correct;
- }
- document.getElementById('bar').style.width=((index+1)/current.q.length*100)+"%";
- document.getElementById('next').classList.remove('hidden');
-}
-function nextQuestion(){
- if(index<current.q.length-1){index++;showQuestion();}
- else showResult();
-}
-function showResult(){
- document.getElementById('quiz').classList.add('hidden');
- document.getElementById('result').classList.remove('hidden');
- const total=current.q.length;
- document.getElementById('resultText').textContent=`Markah: ${score} / ${total}`;
- const stars=score>=9?"⭐⭐⭐⭐⭐":score>=7?"⭐⭐⭐⭐":score>=5?"⭐⭐⭐":score>=3?"⭐⭐":"⭐";
- document.getElementById('stars').textContent=stars;
-}
-function restart(){
- document.getElementById('result').classList.add('hidden');
- document.getElementById('quiz').classList.remove('hidden');
- index=0;score=0;showQuestion();
-}
-function goHome(){
- document.getElementById('quiz').classList.add('hidden');
- document.getElementById('result').classList.add('hidden');
- document.getElementById('home').classList.remove('hidden');
-}
+const data={"math": {"title": "🧮 Matematik Tahun 1", "q": [["6 + 7 = ?", ["11", "12", "13", "14"], "13"], ["15 - 8 = ?", ["5", "6", "7", "8"], "7"], ["9 + 5 = ?", ["12", "13", "14", "15"], "14"], ["18 - 9 = ?", ["7", "8", "9", "10"], "9"], ["7 + 8 = ?", ["14", "15", "16", "17"], "15"], ["20 - 6 = ?", ["12", "13", "14", "15"], "14"], ["5 + 9 = ?", ["13", "14", "15", "16"], "14"], ["16 - 7 = ?", ["7", "8", "9", "10"], "9"], ["8 + 8 = ?", ["14", "15", "16", "17"], "16"], ["19 - 5 = ?", ["12", "13", "14", "15"], "14"], ["4 + 9 = ?", ["12", "13", "14", "15"], "13"], ["17 - 8 = ?", ["7", "8", "9", "10"], "9"], ["6 + 6 = ?", ["10", "11", "12", "13"], "12"], ["14 - 5 = ?", ["7", "8", "9", "10"], "9"], ["9 + 9 = ?", ["16", "17", "18", "19"], "18"]]}, "science": {"title": "🔬 Sains Tahun 1", "q": [["Organ deria untuk melihat ialah...", ["Mata", "Telinga", "Hidung", "Kulit"], "Mata"], ["Manusia memerlukan ____ untuk bernafas.", ["Air", "Udara", "Tanah", "Cahaya"], "Udara"], ["Haiwan yang hidup di air ialah...", ["Kucing", "Ikan", "Ayam", "Arnab"], "Ikan"], ["Bahagian tumbuhan yang menyerap air ialah...", ["Bunga", "Daun", "Akar", "Buah"], "Akar"], ["Organ deria untuk mendengar ialah...", ["Mata", "Telinga", "Lidah", "Kulit"], "Telinga"], ["Yang manakah benda hidup?", ["Batu", "Kerusi", "Pokok", "Pensel"], "Pokok"], ["Lidah digunakan untuk merasa...", ["Bunyi", "Makanan", "Cahaya", "Bau"], "Makanan"], ["Tumbuhan memerlukan ____ untuk hidup.", ["Air", "Bola", "Buku", "Televisyen"], "Air"], ["Haiwan berbulu dan menyusukan anak ialah...", ["Mamalia", "Ikan", "Serangga", "Reptilia"], "Mamalia"], ["Kulit membantu mengesan...", ["Sentuhan", "Cahaya", "Bunyi", "Rasa"], "Sentuhan"], ["Biji benih boleh tumbuh menjadi...", ["Pokok", "Batu", "Kerusi", "Pensel"], "Pokok"], ["Kita menggunakan hidung untuk...", ["Mendengar", "Menghidu", "Melihat", "Menyentuh"], "Menghidu"], ["Ayam bergerak menggunakan...", ["Sirip", "Kaki", "Insang", "Akar"], "Kaki"], ["Ikan bernafas menggunakan...", ["Paru-paru", "Insang", "Kulit", "Daun"], "Insang"], ["Matahari memberi kita...", ["Cahaya", "Buku", "Air", "Makanan"], "Cahaya"]]}, "bm": {"title": "📖 Bahasa Melayu Tahun 1", "q": [["Saya suka makan ____.", ["nasi", "lari", "tidur", "buku"], "nasi"], ["Lawan 'besar' ialah...", ["tinggi", "kecil", "panjang", "cepat"], "kecil"], ["Ali sedang ____ bola.", ["makan", "tidur", "bermain", "minum"], "bermain"], ["Ibu memasak di ____.", ["sekolah", "dapur", "taman", "padang"], "dapur"], ["Lawan 'panas' ialah...", ["sejuk", "besar", "tinggi", "laju"], "sejuk"], ["Pilih kata nama.", ["cantik", "lari", "buku", "cepat"], "buku"], ["Ayah pergi ke ____ membeli barang.", ["kedai", "bantal", "pokok", "kasut"], "kedai"], ["Warna yang betul ialah...", ["merah", "makan", "lari", "tidur"], "merah"], ["Haiwan dalam 'Kucing itu tidur' ialah...", ["Ayam", "Kucing", "Ikan", "Arnab"], "Kucing"], ["Ejaan yang betul ialah...", ["sekolah", "sekola", "sekolh", "sekolahh"], "sekolah"], ["Kita minum ____.", ["air", "kerusi", "buku", "kasut"], "air"], ["Benda untuk menulis ialah...", ["pensel", "ikan", "nasi", "pokok"], "pensel"], ["Lawan 'tinggi' ialah...", ["rendah", "besar", "panjang", "cepat"], "rendah"], ["Ibu dan ayah ialah...", ["ibu bapa", "adik", "kawan", "guru"], "ibu bapa"], ["Saya pergi ke sekolah pada waktu...", ["malam", "pagi", "tengah malam", "subuh"], "pagi"]]}, "eng": {"title": "🇬🇧 English Year 1", "q": [["Complete: I ____ a boy.", ["am", "is", "are", "be"], "am"], ["Opposite of 'big' is...", ["Small", "Tall", "Fast", "Hot"], "Small"], ["Which is a fruit?", ["Apple", "Chair", "Book", "Pencil"], "Apple"], ["She ____ happy.", ["am", "is", "are", "be"], "is"], ["How many fingers on one hand?", ["Three", "Four", "Five", "Six"], "Five"], ["Choose a color.", ["Red", "Cat", "Run", "Book"], "Red"], ["This is my ____.", ["book", "run", "eat", "blue"], "book"], ["Past of 'go' is...", ["goes", "went", "going", "gone"], "went"], ["A cat says...", ["meow", "moo", "woof", "quack"], "meow"], ["The sun is usually...", ["yellow", "black", "purple", "pink"], "yellow"], ["We use our eyes to...", ["see", "eat", "run", "sleep"], "see"], ["One dog, two...", ["dog", "dogs", "doges", "dogies"], "dogs"], ["I ____ two hands.", ["has", "have", "is", "am"], "have"], ["Opposite of 'hot' is...", ["cold", "big", "fast", "long"], "cold"], ["Which is an animal?", ["Tiger", "Table", "Pencil", "School"], "Tiger"]]}};
+let quiz=null,index=0,score=0,xp=0,streak=0,lives=3,locked=false;
+function start(k){const n=document.getElementById("name").value.trim();if(!n){alert("Sila masukkan nama murid dahulu 😊");return}quiz=data[k];index=score=xp=streak=0;lives=3;document.getElementById("home").classList.add("hidden");document.getElementById("result").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");document.getElementById("title").textContent=quiz.title;document.getElementById("welcome").textContent="Selamat belajar, "+n+"! 💪";showQ()}
+function showQ(){locked=false;const x=quiz.q[index];document.getElementById("count").textContent="Soalan "+(index+1)+" / "+quiz.q.length;document.getElementById("bar").style.width=(index/quiz.q.length*100)+"%";document.getElementById("question").textContent=x[0];const box=document.getElementById("options");box.innerHTML="";x[1].forEach(function(o){const b=document.createElement("button");b.className="option";b.textContent=o;b.onclick=function(){answer(b,o)};box.appendChild(b)});document.getElementById("feedback").textContent="";document.getElementById("next").classList.add("hidden");stats()}
+function answer(btn,o){if(locked)return;locked=true;const correct=quiz.q[index][2];document.querySelectorAll(".option").forEach(function(b){b.disabled=true});if(o===correct){score++;streak++;xp+=10+(streak>=3?5:0);btn.style.background="#bbf7d0";btn.style.borderColor="#16a34a";document.getElementById("feedback").textContent=streak>=3?"🔥 Streak hebat! +XP bonus!":"✅ Betul! +10 XP"}else{streak=0;lives=Math.max(0,lives-1);btn.style.background="#fecaca";btn.style.borderColor="#dc2626";document.getElementById("feedback").textContent="❌ Belum tepat. Jawapan: "+correct}document.getElementById("bar").style.width=((index+1)/quiz.q.length*100)+"%";document.getElementById("next").classList.remove("hidden");stats()}
+function stats(){document.getElementById("xp").textContent=xp;document.getElementById("streak").textContent=streak;document.getElementById("lives").textContent=lives}
+function nextQ(){if(index<quiz.q.length-1){index++;showQ()}else result()}
+function result(){document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.remove("hidden");const total=quiz.q.length;document.getElementById("resultText").textContent="Markah: "+score+" / "+total;document.getElementById("resultXP").textContent="XP: "+xp+" ⭐";document.getElementById("stars").textContent=score>=13?"⭐⭐⭐⭐⭐":score>=10?"⭐⭐⭐⭐":score>=7?"⭐⭐⭐":score>=4?"⭐⭐":"⭐";document.getElementById("achievement").textContent=score===total?"🏅 PERFECT SCORE! Semua betul!":score>=13?"🏆 MASTER! Prestasi sangat baik!":score>=10?"🥇 HEBAT! Teruskan usaha!":score>=7?"🥈 BAGUS! Cuba lagi untuk naik tahap!":"💪 TERUSKAN LATIHAN! Kamu boleh!"}
+function again(){document.getElementById("result").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");index=score=xp=streak=0;lives=3;showQ()}
+function goHome(){document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.add("hidden");document.getElementById("home").classList.remove("hidden")}
 </script>
-</body>
-</html>
+</body></html>
