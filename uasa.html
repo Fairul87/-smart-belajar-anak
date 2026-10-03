@@ -1,14 +1,81 @@
-<!doctype html><html lang="ms"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Smart Belajar Darjah 1 UASA</title>
-<style>body{font-family:Arial;margin:0;background:linear-gradient(135deg,#dff6ff,#fff3c4);color:#172033}.app{max-width:760px;margin:auto;padding:15px}.card{background:white;padding:22px;border-radius:22px;box-shadow:0 7px 24px #0002;margin:12px 0}h1,h2{text-align:center}.sub{text-align:center;color:#64748b}input,button{width:100%;padding:14px;margin:7px 0;border-radius:14px;font-size:16px;box-sizing:border-box}input{border:2px solid #dbeafe}button{border:0;background:#2563eb;color:white;font-weight:bold}.subjects{display:grid;grid-template-columns:1fr 1fr;gap:8px}.subject{background:#f1f5f9;color:#172033;border:2px solid #dbe3ec}.top{display:flex;justify-content:space-between;font-weight:bold}.bar{height:12px;background:#e2e8f0;border-radius:20px;margin:12px 0;overflow:hidden}.fill{height:100%;background:#2563eb;width:0}.option{background:#f8fafc;color:#172033;border:2px solid #e2e8f0;text-align:left}.correct{background:#dcfce7!important;border-color:#22c55e!important}.wrong{background:#fee2e2!important;border-color:#ef4444!important}.hidden{display:none}.feedback{text-align:center;font-weight:bold;min-height:24px}.back{background:#64748b}</style></head><body><div class="app">
-<div id="home" class="card"><h1>📚 Smart Belajar Darjah 1</h1><p class="sub">Latihan UASA • Sekolah Agama Sibu</p><input id="name" placeholder="Masukkan nama murid"><div class="subjects"><button class="subject" onclick="start("BM")">📖 Bahasa Melayu</button><button class="subject" onclick="start("BI")">🇬🇧 English</button><button class="subject" onclick="start("MAT")">🧮 Matematik</button><button class="subject" onclick="start("SAINS")">🔬 Sains</button><button class="subject" onclick="start("PI")">🕌 Pendidikan Islam</button><button class="subject" onclick="start("JAWI")">📝 Jawi</button></div><p class="sub">20 soalan setiap subjek • Pilihan A-D • XP ⭐</p></div>
-<div id="quiz" class="card hidden"><div class="top"><span id="st"></span><span id="xp">⭐ 0 XP</span></div><div class="bar"><div id="fill" class="fill"></div></div><p id="num"></p><h2 id="q"></h2><div id="opts"></div><div id="fb" class="feedback"></div><button id="next" class="hidden" onclick="next()">Soalan Seterusnya ➜</button></div>
-<div id="result" class="card hidden"><h1>🏆 Tahniah!</h1><h2 id="res"></h2><button onclick="location.reload()">🔄 Main Semula</button><button class="back" onclick="home()">🏠 Pilih Subjek Lain</button></div></div>
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Belajar UASA Darjah 1</title>
+<style>
+body{font-family:Arial;background:#eef4ff;margin:0;padding:20px}
+.box{max-width:600px;margin:auto;background:white;padding:20px;border-radius:20px}
+button{width:100%;padding:15px;margin:7px 0;border:0;border-radius:12px;background:#2563eb;color:white;font-size:17px}
+h1{text-align:center}
+#quiz,#result{display:none}
+</style>
+</head>
+<body>
+
+<div class="box" id="home">
+<h1>📚 Smart Belajar</h1>
+<p>Latihan UASA Darjah 1</p>
+<button onclick="mula()">🧮 Matematik</button>
+<button onclick="mula()">📖 Bahasa Melayu</button>
+<button onclick="mula()">🇬🇧 English</button>
+<button onclick="mula()">🔬 Sains</button>
+<button onclick="mula()">🕌 Pendidikan Islam</button>
+<button onclick="mula()">✍️ Jawi</button>
+</div>
+
+<div class="box" id="quiz">
+<h2 id="soalan"></h2>
+<div id="jawapan"></div>
+<p id="markah"></p>
+</div>
+
+<div class="box" id="result">
+<h1>🎉 Tahniah!</h1>
+<h2 id="skor"></h2>
+<button onclick="location.reload()">🔄 Main Lagi</button>
+</div>
+
 <script>
-const D={data_js},T={title_js};let cur=[],i=0,xp=0,done=false,name="Murid";
-function start(s){{name=document.getElementById("name").value.trim()||"Murid";cur=D[s].map(a=>({q:a[0],a:a[1],o:a.slice(1)}));cur.sort(()=>Math.random()-.5);i=0;xp=0;document.getElementById("home").classList.add("hidden");document.getElementById("result").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");document.getElementById("st").textContent=T[s];show()}}
-function show(){{done=false;let z=cur[i];document.getElementById("num").textContent=`Soalan ${{i+1}} / 20`;document.getElementById("q").textContent=z.q;document.getElementById("xp").textContent=`⭐ ${{xp}} XP`;document.getElementById("fill").style.width=(i/20*100)+"%";document.getElementById("fb").textContent="";document.getElementById("next").classList.add("hidden");let b=document.getElementById("opts");b.innerHTML="";[...z.o].sort(()=>Math.random()-.5).forEach((o,n)=>{{let v=document.createElement("button");v.className="option";v.textContent=String.fromCharCode(65+n)+". "+o;v.onclick=()=>answer(v,o,z.a);b.appendChild(v)}})}}
-function answer(btn,o,a){{if(done)return;done=true;document.querySelectorAll(".option").forEach(b=>b.disabled=true);if(o===a){{xp+=10;btn.classList.add("correct");document.getElementById("fb").textContent="✅ Betul! +10 XP"}}else{{btn.classList.add("wrong");document.getElementById("fb").textContent="❌ Jawapan betul: "+a;document.querySelectorAll(".option").forEach(b=>{{if(b.textContent.slice(3)===a)b.classList.add("correct")}})}}document.getElementById("xp").textContent=`⭐ ${{xp}} XP`;document.getElementById("next").classList.remove("hidden")}}
-function next(){{i++;if(i>=20)finish();else show()}}
-function finish(){{document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.remove("hidden");let m=xp/2,s=m>=90?"⭐⭐⭐⭐⭐":m>=75?"⭐⭐⭐⭐":m>=60?"⭐⭐⭐":m>=40?"⭐⭐":"⭐";document.getElementById("res").innerHTML=`$${{name}}<br><br>Markah: ${{m}}/100<br>XP: ${{xp}}<br><br>${{s}}<br><br>${{m>=80?"Hebat! Teruskan usaha! 💪":m>=50?"Bagus! Terus berlatih! 📚":"Jangan putus asa. Cuba lagi! 🌟"}}`}}
-function home(){{document.getElementById("result").classList.add("hidden");document.getElementById("home").classList.remove("hidden")}}
-</script></body></html>
+let i=0,score=0;
+let q=[
+["3 + 4 = ?",["5","6","7","8"],2],
+["9 - 5 = ?",["3","4","5","6"],1],
+["2 + 6 = ?",["6","7","8","9"],2],
+["5 + 5 = ?",["8","9","10","11"],2],
+["10 - 3 = ?",["5","6","7","8"],2]
+];
+
+function mula(){
+document.getElementById("home").style.display="none";
+document.getElementById("quiz").style.display="block";
+papar();
+}
+
+function papar(){
+document.getElementById("soalan").innerText="Soalan "+(i+1)+" / "+q.length+"\n"+q[i][0];
+let x=document.getElementById("jawapan");
+x.innerHTML="";
+q[i][1].forEach((a,n)=>{
+let b=document.createElement("button");
+b.innerText=a;
+b.onclick=()=>jawab(n);
+x.appendChild(b);
+});
+}
+
+function jawab(n){
+if(n==q[i][2])score++;
+i++;
+if(i<q.length)papar();
+else{
+document.getElementById("quiz").style.display="none";
+document.getElementById("result").style.display="block";
+document.getElementById("skor").innerText="Skor: "+score+" / "+q.length;
+}
+}
+</script>
+
+</body>
+</html>
